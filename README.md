@@ -48,3 +48,5 @@ wget -O /tmp/install-passwall2.sh --no-check-certificate --header="Authorization
 ```
 wget -O /tmp/install-passwall1.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall1.sh" && chmod +x /tmp/install-passwall1.sh && sh /tmp/install-passwall1.sh && rm -f /tmp/install-passwall1.sh
 ```
+
+## Install LED Controls
