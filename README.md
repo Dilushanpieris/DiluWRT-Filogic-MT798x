@@ -36,3 +36,9 @@ wget -O /tmp/install-argon-theme.sh --no-check-certificate --header="Authorizati
 ```
 wget -O /tmp/install-dashboard.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-dashboard.sh" && chmod +x /tmp/install-dashboard.sh && sh /tmp/install-dashboard.sh && rm -f /tmp/install-dashboard.sh
 ```
+
+## Passwall Install
+
+```
+wget -O /tmp/install-passwall.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall.sh" && chmod +x /tmp/install-passwall.sh && sh /tmp/install-passwall.sh && rm -f /tmp/install-passwall.sh
+```
