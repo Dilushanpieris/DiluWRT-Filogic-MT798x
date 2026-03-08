@@ -3,7 +3,7 @@
 
 root_password="dilu1212"
 # Using CIDR notation required for OpenWrt 25.12+
-lan_ip_address="192.168.3.1/24"
+lan_ip_address="192.168.2.1/24"
 
 # log potential errors
 exec >/tmp/setup.log 2>&1
@@ -20,15 +20,13 @@ if [ -n "$lan_ip_address" ]; then
 fi
 
 # 3. Configure and Enable WLAN (2.4G / 5G)
-# Enable the radios
 uci set wireless.radio0.disabled='0'
 uci set wireless.radio1.disabled='0'
 
 # Set the custom SSID
-uci set wireless.default_radio0.ssid='DiluWRT_2.4G/5G'
-uci set wireless.default_radio1.ssid='DiluWRT_2.4G/5G'
+uci set wireless.default_radio0.ssid='DiluWRT_2.4G/5G_AX'
+uci set wireless.default_radio1.ssid='DiluWRT_2.4G/5G_AX'
 uci commit wireless
-
 
 # 4. Set Hostname
 uci set system.@system[0].hostname='DiluWRT'
@@ -48,6 +46,9 @@ cat << 'EOF' > /etc/banner
                             >NET. Limits Redefined.                                                                                                                                                                             
                                           
 EOF
+
+# --- FIX: Force Wi-Fi to start immediately after the config is built ---
+wifi reload
 
 echo "Hostname and SSH banner updated successfully."
 echo "Changes to hostname will take effect after a reboot."
