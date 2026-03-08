@@ -50,3 +50,6 @@ wget -O /tmp/install-passwall1.sh --no-check-certificate --header="Authorization
 ```
 
 ## Install LED Controls
+```
+wget -O /tmp/install-status-led.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-status-led.sh" && chmod +x /tmp/install-status-led.sh && sh /tmp/install-status-led.sh && rm -f /tmp/install-status-led.sh
+```
