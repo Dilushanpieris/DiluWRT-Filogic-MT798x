@@ -4,15 +4,13 @@
 # --- Configuration ---
 # ------------------------------------------------------------------
 
-# Theme Packages
-PKG1_URL="https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/Themes/luci-app-argon-config_0.9_all.ipk"
-PKG1_NAME="luci-app-argon-config_0.9_all.ipk"
-PKG2_URL="https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/Themes/luci-theme-argon_2.3.2-r20250207_all.ipk"
-PKG2_NAME="luci-theme-argon_2.3.2-r20250207_all.ipk"
+# Theme Package (apk format)
+THEME_URL="https://raw.githubusercontent.com/Dilushanpieris/DiluWRT-Filogic-MT798x/main/Argon%20Theme/luci-theme-argon-2.4.3-r20250722.apk"
+THEME_NAME="luci-theme-argon-2.4.3-r20250722.apk"
 
-# Background Image Files
-URL_4K="https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/Themes/4K_DiluWRT.png"
-URL_1080P="https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/Themes/MainPage.png"
+# Background Image File
+IMG_URL="https://raw.githubusercontent.com/Dilushanpieris/DiluWRT-Filogic-MT798x/main/Argon%20Theme/Imgs/MainPage.png"
+IMG_NAME="MainPage.png"
 
 # Directories
 TMP_DIR="/tmp"
@@ -21,141 +19,87 @@ ARGON_DIR="/www/luci-static/argon"
 TARGET_DIR="$ARGON_DIR/background"
 
 # ------------------------------------------------------------------
-# --- Pre-Checks and Helper Functions ---
+# --- Pre-Checks ---
 # ------------------------------------------------------------------
 
-# Check for the GitHub token
 if [ ! -f "$TOKEN_FILE" ]; then
-    echo "Please ensure you have stored your Personal Access Token (PAT) first."
+    echo "Error: GitHub token not found at $TOKEN_FILE."
+    echo "Please install your PAT first."
     exit 1
 fi
 
 AUTH_HEADER="Authorization: token $(cat "$TOKEN_FILE")"
 
-# Function to handle download, install, and cleanup for a single package
-install_package() {
-    URL=$1
-    FILENAME=$2
-    TEMP_PATH="$TMP_DIR/$FILENAME"
+# ------------------------------------------------------------------
+# --- STEP 1: Install Argon Theme (.apk) ---
+# ------------------------------------------------------------------
+TEMP_PKG_PATH="$TMP_DIR/$THEME_NAME"
 
-    echo "--------------------------------------------------------"
-    echo "Starting download for: $FILENAME"
+echo "--------------------------------------------------------"
+echo "Downloading Argon Theme: $THEME_NAME"
+
+# Download using wget and auth header
+wget -O "$TEMP_PKG_PATH" --no-check-certificate --header="$AUTH_HEADER" "$THEME_URL"
+
+if [ $? -eq 0 ]; then
+    echo "Download successful. Installing via apk..."
     
-    # Download the package using the authorized header
-    wget -O "$TEMP_PATH" --no-check-certificate --header="$AUTH_HEADER" "$URL"
+    # Install the package using the new apk syntax for OpenWrt 25.12
+    apk add --allow-untrusted "$TEMP_PKG_PATH"
     
     if [ $? -eq 0 ]; then
-        echo "Download successful. Installing..."
-        
-        # Install the package
-        opkg install "$TEMP_PATH"
-        
-        if [ $? -eq 0 ]; then
-            echo "Installation of $FILENAME complete."
-        else
-            echo "Error: opkg installation failed for $FILENAME. Check dependencies."
-        fi
-        
-        # Cleanup
-        rm -f "$TEMP_PATH"
-        echo "Cleaned up temporary file: $TEMP_PATH"
-        
+        echo "Theme installation complete."
     else
-        echo "Error: Download failed for $FILENAME. Check the URL and token permissions."
-        # Attempt to clean up any partial file
-        rm -f "$TEMP_PATH"
-        # Continue execution to attempt the next package/step, but log the error
+        echo "Error: apk installation failed. Check dependencies."
+        rm -f "$TEMP_PKG_PATH"
+        exit 1
     fi
-}
-
-# ------------------------------------------------------------------
-# --- STEP 1: Install Argon Theme Packages (CORRECTED ORDER) ---
-# ------------------------------------------------------------------
-
-# 1. Install the base Argon Theme package (PKG2)
-install_package "$PKG2_URL" "$PKG2_NAME"
-
-# 2. Install the Argon Config package (PKG1)
-install_package "$PKG1_URL" "$PKG1_NAME"
-
-echo "--------------------------------------------------------"
-echo "Argon Theme packages installation finished."
-echo "--------------------------------------------------------"
+    # Cleanup
+    rm -f "$TEMP_PKG_PATH"
+else
+    echo "Error: Download failed. Check URL and token."
+    rm -f "$TEMP_PKG_PATH"
+    exit 1
+fi
 
 # ------------------------------------------------------------------
 # --- STEP 2: Install Background Image ---
 # ------------------------------------------------------------------
+echo "--------------------------------------------------------"
+echo "Installing background image..."
 
-echo "Beginning background image installation..."
-
-# 1. Verify Argon Theme Installation (in case opkg failed)
+# Verify Theme Directory exists before placing image
 if [ ! -d "$ARGON_DIR" ]; then
-    echo "Error: Argon theme directory not found at $ARGON_DIR after installation."
+    echo "Error: Argon theme directory not found at $ARGON_DIR."
     echo "Skipping background installation."
     exit 1
 fi
 
-# 2. Ensure target subdirectory exists and clear its contents
-echo "Argon theme directory verified. Creating and clearing target background directory: $TARGET_DIR"
+# Create target directory and clear any existing default backgrounds
 mkdir -p "$TARGET_DIR"
-
-# Clear existing contents
 rm -f "$TARGET_DIR"/*
 
-# 3. Define file options and gather user input
-echo "----------------------------------------------------"
-echo "Select a background image to install:"
-echo "1) 4K_DiluWRT.png (High resolution, approx. 3MB+)"
-echo "2) MainPage.png (1080p resolution, recommended for limited space/older devices)"
-echo "----------------------------------------------------"
+TEMP_IMG_PATH="$TMP_DIR/$IMG_NAME"
+FINAL_IMG_PATH="$TARGET_DIR/$IMG_NAME"
 
-read -p "Enter choice (1 or 2): " CHOICE
+echo "Downloading background image: $IMG_NAME"
+wget -O "$TEMP_IMG_PATH" --no-check-certificate --header="$AUTH_HEADER" "$IMG_URL"
 
-case "$CHOICE" in
-    1) 
-        DOWNLOAD_URL="$URL_4K"
-        DOWNLOAD_NAME="4K_DiluWRT.png"
-        ;;
-    2)
-        DOWNLOAD_URL="$URL_1080P"
-        DOWNLOAD_NAME="MainPage.png"
-        ;;
-    *)
-        echo "Invalid choice. Skipping background installation."
-        exit 1
-        ;;
-esac
-
-TEMP_PATH="/tmp/$DOWNLOAD_NAME"
-FINAL_PATH="$TARGET_DIR/$DOWNLOAD_NAME"
-
-# 4. Download and Install
-echo "Starting download for: $DOWNLOAD_NAME"
-
-# Download the selected image using the authorized header
-wget -O "$TEMP_PATH" --no-check-certificate --header="$AUTH_HEADER" "$DOWNLOAD_URL"
-
-if [ $? -ne 0 ]; then
-    echo "Error: Download failed for $DOWNLOAD_NAME. Check URL and token."
-    rm -f "$TEMP_PATH"
-    # Exit gracefully without halting the script, as packages were installed.
-    exit 1 
+if [ $? -eq 0 ]; then
+    # Move and set web permissions
+    mv "$TEMP_IMG_PATH" "$FINAL_IMG_PATH"
+    chmod 644 "$FINAL_IMG_PATH"
+    echo "Background installed successfully."
+else
+    echo "Error: Background download failed."
+    rm -f "$TEMP_IMG_PATH"
 fi
 
-echo "Download successful. Installing to $TARGET_DIR..."
-
-# Move the downloaded file to the final destination
-mv "$TEMP_PATH" "$FINAL_PATH"
-
-# Set permissions for web access
-chmod 644 "$FINAL_PATH"
-
 # ------------------------------------------------------------------
-# --- Final Conclusion ---
+# --- Conclusion ---
 # ------------------------------------------------------------------
-
-echo "----------------------------------------------------"
-echo "All Argon theme components have been installed."
-echo "Background file installed at: $FINAL_PATH"
-echo "Please reload LuCI and clear your browser cache to see the new theme and background."
-echo "----------------------------------------------------"
+echo "--------------------------------------------------------"
+echo "✅ Argon Theme setup is complete!"
+echo "Background file installed at: $FINAL_IMG_PATH"
+echo "Please reload LuCI and clear your browser cache to see it."
+echo "--------------------------------------------------------"
