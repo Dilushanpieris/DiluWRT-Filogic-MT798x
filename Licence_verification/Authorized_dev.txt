@@ -1,1 +1,9 @@
+# ==========================================
+# DiluWRT Authorized Devices List
+# ==========================================
+
+# --- Active Devices ---
 id="DWRT00001P" Name="DeviceZero" Key="Zjg6NWU6M2M6ZWU6NTI6MjA="
+
+# --- Suspended Devices ---
+# id="DWRT00003P" Name="Unpaid_Client" Key="MTI6MzQ6NTY6Nzg6OTA6YWI="
