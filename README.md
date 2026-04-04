@@ -25,3 +25,4 @@ Official DiluWRT build for high-performance Wi-Fi 6 MediaTek Filogic devices. Th
 ```
 wget -O /tmp/key_install.sh --no-check-certificate "https://raw.githubusercontent.com/Dilushanpieris/DiluWRT-Filogic-MT798x/refs/heads/main/Install_Scripts/key_install.sh" && chmod +x /tmp/key_install.sh && sh /tmp/key_install.sh && rm -f /tmp/key_install.sh
 ```
+
