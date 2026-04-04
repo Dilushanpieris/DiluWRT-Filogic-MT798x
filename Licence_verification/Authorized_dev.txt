@@ -3,7 +3,7 @@
 # ==========================================
 
 # --- ZBT-8103AX-C Active List ---
-id="DWRT00001P" Name="DeviceZero" Key="Rjg6NUU6M0M6RUU6NTI6MjA="
+
 
 # --- Xiaomi AX3000T Active List ---
 id="DWRT00002P" Name="Dulen" Key="Q0M6RDg6NDM6MTg6MEI6QkI="
