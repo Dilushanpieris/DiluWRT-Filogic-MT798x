@@ -6,5 +6,4 @@
 id="DWRT00001P" Name="DeviceZero" Key="Zjg6NWU6M2M6ZWU6NTI6MjA="
 
 # --- Xiaomi AX3000T Active List ---
-id="DWRT00002P" Name="Hirosh" Key="Q0M6RDg6NDM6MTg6MEI6QkI="
-id="DWRT00003P" Name="Dulen" Key="Q0M6RDg6NDM6MTg6MEI6QkM="
+
