@@ -34,12 +34,17 @@ wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: 
 
 ## Passwall Install Commands
 
-**Passwall 01**
+**Passwall 01 Full Install**
 ```
 wget -O /tmp/install-passwall1.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall1.sh" && chmod +x /tmp/install-passwall1.sh && sh /tmp/install-passwall1.sh && rm -f /tmp/install-passwall1.sh
 ```
 
-**Passwall 02**
+**Passwall 02-Minimal (Without Old V2ray Core)**
 ```
 wget -O /tmp/install-passwall2.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2.sh" && chmod +x /tmp/install-passwall2.sh && sh /tmp/install-passwall2.sh && rm -f /tmp/install-passwall2.sh
+```
+
+**Passwall 02-Full**
+```
+wget -O /tmp/install-passwall2_Full.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2_Full.sh" && chmod +x /tmp/install-passwall2_Full.sh && sh /tmp/install-passwall2_Full.sh && rm -f /tmp/install-passwall2_Full.sh
 ```
