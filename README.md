@@ -1,5 +1,16 @@
 # DiluWRT-Filogic-MT798x
+
+<hr> 
+
 Official DiluWRT build for high-performance Wi-Fi 6 MediaTek Filogic devices. This repository contains the latest custom OpenWrt 25.12 firmware for the ZBT Z8103AX-C, Xiaomi AX3000T, and compatible MT798x routers.
+
+![Image DiluWRT](https://live.staticflickr.com/65535/54798242597_0201fcfbc4_b.jpg)
+
+>[!TIP]
+>This is Not A Free Ware like Build For S12 Pro You Need To Submit A Payment to Secure License to Use the Firmware -  DiluWRT 25.01
+
+>[!CAUTION]
+>Any Modding or Removing Verifiers May Result is Permanant Ban / Bootloop of Router That Cannot Be Recovered. Without a UART Flash. So Do Not Try To Remove Any Kind of Protection from router it's safety for both parties.
 
 <hr>
 
@@ -20,11 +31,45 @@ Official DiluWRT build for high-performance Wi-Fi 6 MediaTek Filogic devices. Th
 | `opkg search <pkg>` | `apk search <pkg>` | Search for packages |
 
 
-## Key Install Command
+## 01 - Inital Setup - Basic Luci 
+
+![First Boot](https://live.staticflickr.com/65535/54784179079_217072a029_b.jpg)
+
+*After Reboot You Are Done with Flashing And Now You Can Log into Luci Interface With Following . SSH And WebUi both Enabled.*
+
+
+**LUCI Interface** : http://192.168.2.1
+
+**SSH Login/Default Login Luci (Can Change Later with Luci Interface)** <br>
+* Username : root  
+* password : dilu1212 (Default Password)
+
+*You Can Update Password With Luci > System >Administration > Update Password (Same Password Updated for SSH And SCP)* 
+
+**You Can Access Terminal All Inside of Luci .. Services > Terminal**
+
+
+## 02 - Key Install 
+
+>[!CAUTION]
+>Before Requesting Key : <br>**Fully Read The Guideline From Start to End And Undersatnd The Process.** <br> **Installed DiluWRT Sysupgrade**<br> **Router Have Working Internet Connection when you pulg in Uplink to WAN**<br>
+**Get Familier with The Process. You will be provided with a Key Along with your licencing** 
+
+**Get Install Key and License From**
+
+![WA Contact](https://live.staticflickr.com/65535/54953867207_c1c615b248.jpg)
+
+**Paste this Command into your Terminal(Router Must Have Internet) It Will Upgrade Dependencies And Request For A Key Paste With ctrl + insert**
 
 ```
 wget -O /tmp/key_install.sh --no-check-certificate "https://raw.githubusercontent.com/Dilushanpieris/DiluWRT-Filogic-MT798x/refs/heads/main/Install_Scripts/key_install.sh" && chmod +x /tmp/key_install.sh && sh /tmp/key_install.sh && rm -f /tmp/key_install.sh
 ```
+
+>[!IMPORTANT]
+>Now Your Router Is Ready for Full DiluWRT Install For MEdiatek MT987x Target Now You Can Paste Online Install Command. That Install all The Core of DiluWRT System. 
+
+>[!WARNING]
+>If plan to Install Passwall make Sure Free Space of minimum **68 MB** Is Avalible Before Flashing. **If Not Please Refer UbootMod And Re-partition Flash Storage without Recovery partition.**
 
 ## Online Install Command 
 
@@ -32,19 +77,66 @@ wget -O /tmp/key_install.sh --no-check-certificate "https://raw.githubuserconten
 wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/oneline-Install.sh" && chmod +x /tmp/oneline-install.sh && sh /tmp/oneline-install.sh && rm -f /tmp/oneline-install.sh
 ```
 
+>[!CAUTION]
+> While Installing You Will Be Asked For **MAC Address/Interface**: <br>Please Select the Correct Interface Number. Same Mac Is Used in The **Box of Router/ Sticker on back** And Note That. This MAC Is Also Bound To your License And Selecting Wrong Interface/MAC Result in **SoftLock** So Please Be Cautious
+
+**Also Ready to Press Button When Asked for Passwall Switch**
+
+**Now Router Will Be Rebooted and Your Network May Work As Normal. Now For Passwall Install.**
+
+![Theme Argon](https://live.staticflickr.com/65535/54783098247_548dfbcd4b_b.jpg)
+
+
 ## Passwall Install Commands
 
-**Passwall 01 Full Install**
-```
-wget -O /tmp/install-passwall1.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall1.sh" && chmod +x /tmp/install-passwall1.sh && sh /tmp/install-passwall1.sh && rm -f /tmp/install-passwall1.sh
-```
+>[!IMPORTANT]
+>This Is The Most Refined Version of Passwall02 Specifically for MI Ax3000T And ZBT Router models.
 
-**Passwall 02-Minimal (Without Old V2ray Core)**
+**Passwall 02-Minimal**
 ```
 wget -O /tmp/install-passwall2.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2.sh" && chmod +x /tmp/install-passwall2.sh && sh /tmp/install-passwall2.sh && rm -f /tmp/install-passwall2.sh
 ```
+## Passwall Node/Routing Rule Mods
 
-**Passwall 02-Full**
+
+## Auto Restart/Paswall-Switch On-Off using Crontab.
+
+>[!IMPORTANT]
+>Using Passwall without a Break Can Cause ISP To Tag your Router. So To Avoid limiting Speeds / Connection Drops its Highly Recommended to Have Auto restart Set up At Desired Time, Its Already Setup in The System > Scheduled Tasks if You Want to Avoid Any Automated Tasks. Use **#** In The Start of Command Looks like This . 
+
+>[!TIP]
+>To Make It Work please Make Sure The Correct Timezone is Set. 
+
+**Navigate to Luci > System > Scheduled Tasks > Then Add **#** To Make automation Turn off**
+
 ```
-wget -O /tmp/install-passwall2_Full.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2_Full.sh" && chmod +x /tmp/install-passwall2_Full.sh && sh /tmp/install-passwall2_Full.sh && rm -f /tmp/install-passwall2_Full.sh
+# Reboot Router Everyday at 4.00 AM
+# 0 4 * * * sleep 70 && touch /etc/banner && reboot     
+
+# Start Passwall everyday at 8:00 AM
+0 8 * * * /usr/share/autoswitch/pw_timer.sh start
+
+# Stop Passwall everyday at 11:59 PM
+59 23 * * * /usr/share/autoswitch/pw_timer.sh stop
 ```
+*reboot will **not** Go off at 4.00 AM But Passwall will Start Everyday at 8.00 AM and Stop at 11.59 PM Where time is Synced.*
+
+## Luci Mobile Management Interface
+
+>[!TIP]
+>This Is The Cleanest Management UI That You Can Find Just Download From Play Store And Log In Using Router Credentials.
+
+**Play Store Link: [Luci_Mobile](https://play.google.com/store/apps/details?id=com.cogwheel.LuCIMobile&pli=1)**
+
+## Acknolwlegements 
+
+This project would not be possible without the hard work and dedication of the **OpenWrt community.** A special thank you goes to:
+
+R1BNC: For the extensive video tutorials, guides, and inspiration regarding 4G/5G router modifications and OpenWrt customization.
+The OpenWrt Community: To all the developers, maintainers, and builders who keep this open-source ecosystem alive and thriving.
+
+Project-DiluWRT is built on the shoulders of giants. Thank you!
+
+## Your Support is Much Appriciated:
+
+<p><a href="https://www.buymeacoffee.com/dilu122x"> <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="dilu122x" /></a></p>
