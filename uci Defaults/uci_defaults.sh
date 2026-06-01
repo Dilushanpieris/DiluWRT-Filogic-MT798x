@@ -28,8 +28,11 @@ uci set wireless.default_radio0.ssid='DiluWRT_2.4G/5G_AX'
 uci set wireless.default_radio1.ssid='DiluWRT_2.4G/5G_AX'
 uci commit wireless
 
-# 4. Set Hostname
+# 4. Set Hostname, Timezone, and System Description
 uci set system.@system[0].hostname='DiluWRT'
+uci set system.@system[0].zonename='Asia/Colombo'
+uci set system.@system[0].timezone='IST-5:30'
+uci set system.@system[0].notes='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
 uci commit system
 
 # 5. Apply Custom DiluWRT Banner
@@ -43,13 +46,14 @@ cat << 'EOF' > /etc/banner
 888    888 888 888 888  888      88888P Y88888 888 T88b      888     
 888  .d88P 888 888 Y88b 888      8888P   Y8888 888  T88b     888     
 8888888P"  888 888  "Y88888      888P     Y888 888   T88b    888
-                            >NET. Limits Redefined.                                                                                                                                                                             
-                                          
+                             >NET. Limits Redefined.                                                                                                                                                                                                                                                                                       
+                                              
 EOF
 
 # --- FIX: Force Wi-Fi to start immediately after the config is built ---
 wifi reload
+wifi up
 
-echo "Hostname and SSH banner updated successfully."
+echo "Hostname, Timezone, Description, and SSH banner updated successfully."
 echo "Changes to hostname will take effect after a reboot."
 echo "All done!"
