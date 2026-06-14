@@ -59,7 +59,5 @@ cat << 'EOF' > /etc/banner
                              >NET. Limits Redefined.                                                                                                                                                                                                                                                                                                                                                
 EOF
 
-# 6. Signal Completion and Force Clean Reboot
+# 6. Signal Completion safely
 echo "All done!"
-sleep 3
-reboot &
