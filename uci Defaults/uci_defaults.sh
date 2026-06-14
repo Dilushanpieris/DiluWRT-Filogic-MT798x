@@ -1,59 +1,65 @@
 #!/bin/sh
-# Beware! This script will be in /rom/etc/uci-defaults/ as part of the image.
+# Located in /etc/uci-defaults/ inside your custom image build
 
 root_password="dilu1212"
-# Using CIDR notation required for OpenWrt 25.12+
 lan_ip_address="192.168.2.1/24"
+wlan_name="DiluWRT_2.4G/5G_AX"
 
-# log potential errors
+# Log potential errors silently
 exec >/tmp/setup.log 2>&1
 
 # 1. Set Root Password
 if [ -n "$root_password" ]; then
-  (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
+    (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
 fi
 
-# 2. Configure LAN IP
+# 2. Configure LAN (Strictly using official reference pattern)
 if [ -n "$lan_ip_address" ]; then
-  uci set network.lan.ipaddr="$lan_ip_address"
-  uci commit network
+    uci set network.lan.ipaddr="$lan_ip_address"
+    uci commit network
 fi
 
-# 3. Configure and Enable WLAN (2.4G / 5G)
-uci set wireless.radio0.disabled='0'
-uci set wireless.radio1.disabled='0'
+# 3. Configure WLAN (Strictly using official reference array indices)
+if [ -n "$wlan_name" ]; then
+    # Radio Devices (Turn on both dual-band radios)
+    uci set wireless.@wifi-device[0].disabled='0'
+    uci set wireless.@wifi-device[1].disabled='0'
+    
+    # Wireless Interfaces (Map SSIDs to both radio tracks)
+    uci set wireless.@wifi-iface[0].disabled='0'
+    uci set wireless.@wifi-iface[0].ssid="$wlan_name"
+    
+    uci set wireless.@wifi-iface[1].disabled='0'
+    uci set wireless.@wifi-iface[1].ssid="$wlan_name"
+    
+    uci commit wireless
+fi
 
-# Set the custom SSID
-uci set wireless.default_radio0.ssid='DiluWRT_2.4G/5G_AX'
-uci set wireless.default_radio1.ssid='DiluWRT_2.4G/5G_AX'
-uci commit wireless
-
-# 4. Set Hostname, Timezone, and System Description
+# 4. Configure System Hostname, Regional Targets, and Metadata
 uci set system.@system[0].hostname='DiluWRT'
 uci set system.@system[0].zonename='Asia/Colombo'
 uci set system.@system[0].timezone='IST-5:30'
-uci set system.@system[0].notes='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
+uci set system.@system[0].description='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
+uci set system.@system[0].notes='# Default Root password : dilu1212
+ # Passwall Auto Switch Is Enabled by Default 
+ # License Guard / AntiTamper Enabled
+ # Please Do Not Reset Router (You May Loose Configs)'
 uci commit system
 
 # 5. Apply Custom DiluWRT Banner
-echo "Updating SSH login banner to DiluWRT..."
 cat << 'EOF' > /etc/banner
 8888888b.  d8b 888               888       888 8888888b. 88888888888 
 888  "Y88b Y8P 888               888  o    888 888  "Y88b    888     
 888    888     888               888 d8b   888 888    888    888     
-888    888 888 888 888  888      888 d888b 888 888   d88P    888     
-888    888 888 888 888  888      888d88888b888 8888888P"     888     
-888    888 888 888 888  888      88888P Y88888 888 T88b      888     
-888  .d88P 888 888 Y88b 888      8888P   Y8888 888  T88b     888     
-8888888P"  888 888  "Y88888      888P     Y888 888   T88b    888
-                             >NET. Limits Redefined.                                                                                                                                                                                                                                                                                       
-                                              
+888    888 888 888 888  888      888 d888b 888 888    d88P    888     
+888    888 888 888 888  888      888d88888b888 8888888P"      888     
+888    888 888 888 888  888      88888P Y88888 888 T88b       888     
+888  .d88P 888 888 Y88b 888      8888P   Y8888 888  T88b      888     
+8888888P"  888 888  "Y88888      888P     Y888 888   T88b     888
+                             >NET. Limits Redefined.                                                                                                                                                                                                                                                                                                                                                
 EOF
 
-# --- FIX: Force Wi-Fi to start immediately after the config is built ---
-wifi reload
-wifi up
-
-echo "Hostname, Timezone, Description, and SSH banner updated successfully."
-echo "Changes to hostname will take effect after a reboot."
+# 6. Signal Completion and Force Clean Reboot
 echo "All done!"
+sleep 3
+reboot &
