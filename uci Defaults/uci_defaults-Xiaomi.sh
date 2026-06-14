@@ -1,9 +1,9 @@
 #!/bin/sh
-# Located in /etc/uci-defaults/ inside your custom image build
+# Located in /etc/uci-defaults/ inside your custom Xiaomi AX3000T image build
 
 root_password="dilu1212"
 lan_ip_address="192.168.2.1/24"
-wlan_name="DiluWRT_2.4G/5G_AX"
+wlan_name="DiluWRT_2.4G/5G_AX3000"
 
 # Log potential errors silently
 exec >/tmp/setup.log 2>&1
@@ -43,10 +43,10 @@ fi
 uci set system.@system[0].hostname='DiluWRT'
 uci set system.@system[0].zonename='Asia/Colombo'
 uci set system.@system[0].timezone='IST-5:30'
-uci set system.@system[0].description='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
+uci set system.@system[0].description='Official Diluwrt Build Optimized For Xiaomi AX3000T'
 uci set system.@system[0].notes='# Default Root password : dilu1212
  # Passwall Auto Switch Is Enabled by Default 
- # Do Not Try To Tamper With Licence guard.
+ # Do Not Try To Tamper With License guard.
  # Please Do Not Reset Router (You May Loose Configs)
  # Dev Contact +94762358660'
 uci commit system
