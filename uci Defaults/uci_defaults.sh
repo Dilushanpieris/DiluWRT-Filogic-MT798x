@@ -19,9 +19,13 @@ if [ -n "$lan_ip_address" ]; then
     uci commit network
 fi
 
-# 3. Configure WLAN (Strictly using official reference array indices)
+# 3. Configure WLAN & Country Codes (Strictly using official reference array indices)
 if [ -n "$wlan_name" ]; then
-    # Radio Devices (Turn on both dual-band radios)
+    # Set Regulatory Domain to US for both physical radios
+    uci set wireless.@wifi-device[0].country='US'
+    uci set wireless.@wifi-device[1].country='US'
+
+    # Turn on both dual-band radios
     uci set wireless.@wifi-device[0].disabled='0'
     uci set wireless.@wifi-device[1].disabled='0'
     
@@ -42,8 +46,9 @@ uci set system.@system[0].timezone='IST-5:30'
 uci set system.@system[0].description='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
 uci set system.@system[0].notes='# Default Root password : dilu1212
  # Passwall Auto Switch Is Enabled by Default 
- # License Guard / AntiTamper Enabled
- # Please Do Not Reset Router (You May Loose Configs)'
+ # Do Not Try To Tamper With Licence guard.
+ # Please Do Not Reset Router (You May Loose Configs)
+ # Dev Contact +94762358660'
 uci commit system
 
 # 5. Apply Custom DiluWRT Banner
@@ -51,13 +56,14 @@ cat << 'EOF' > /etc/banner
 8888888b.  d8b 888               888       888 8888888b. 88888888888 
 888  "Y88b Y8P 888               888  o    888 888  "Y88b    888     
 888    888     888               888 d8b   888 888    888    888     
-888    888 888 888 888  888      888 d888b 888 888    d88P    888     
-888    888 888 888 888  888      888d88888b888 8888888P"      888     
-888    888 888 888 888  888      88888P Y88888 888 T88b       888     
-888  .d88P 888 888 Y88b 888      8888P   Y8888 888  T88b      888     
-8888888P"  888 888  "Y88888      888P     Y888 888   T88b     888
-                             >NET. Limits Redefined.                                                                                                                                                                                                                                                                                                                                                
+888    888 888 888 888  888      888 d888b 888 888   d88P    888     
+888    888 888 888 888  888      888d88888b888 8888888P"     888     
+888    888 888 888 888  888      88888P Y88888 888 T88b      888     
+888  .d88P 888 888 Y88b 888      8888P   Y8888 888  T88b     888     
+8888888P"  888 888  "Y88888      888P     Y888 888   T88b    888
+                             >NET. Limits Redefined.                                                                                                                                                                                                                                                                                       
+                                              
 EOF
 
-# 6. Signal Completion safely
+# 6. Signal Completion safely (No power-cut reboot loops)
 echo "All done!"
