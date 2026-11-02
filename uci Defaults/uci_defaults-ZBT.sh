@@ -43,11 +43,12 @@ fi
 uci set system.@system[0].hostname='DiluWRT'
 uci set system.@system[0].zonename='Asia/Colombo'
 uci set system.@system[0].timezone='IST-5:30'
-uci set system.@system[0].description='Official Diluwrt Build Optimized For AX3000 And ZBT Z8103AX'
+uci set system.@system[0].description='Official Diluwrt Build Optimized For ZBTLink Z8103AX-C'
 uci set system.@system[0].notes='# Default Root password : dilu1212
  # Passwall Auto Switch Is Enabled by Default 
  # Do Not Try To Tamper With License guard.
  # Please Do Not Reset Router (You May Loose Configs)
+ # Attend-SysUpgrade Disabled By Default(ASU)
  # Dev Contact +94762358660'
 uci commit system
 
