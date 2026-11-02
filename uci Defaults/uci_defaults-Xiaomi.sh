@@ -3,7 +3,7 @@
 
 root_password="dilu1212"
 lan_ip_address="192.168.2.1/24"
-wlan_name="DiluWRT_2.4G/5G_AX3000"
+wlan_name="DiluWRT_2.4G/5G_AX3000T"
 
 # Log potential errors silently
 exec >/tmp/setup.log 2>&1
@@ -48,6 +48,7 @@ uci set system.@system[0].notes='# Default Root password : dilu1212
  # Passwall Auto Switch Is Enabled by Default 
  # Do Not Try To Tamper With License guard.
  # Please Do Not Reset Router (You May Loose Configs)
+ # Attend-SysUpgrade Disabled By Default(ASU)
  # Dev Contact +94762358660'
 uci commit system
 
