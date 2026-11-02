@@ -74,7 +74,7 @@ wget -O /tmp/key_install.sh --no-check-certificate "https://raw.githubuserconten
 ## Online Install Command 
 
 ```
-wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/oneline-Install.sh" && chmod +x /tmp/oneline-install.sh && sh /tmp/oneline-install.sh && rm -f /tmp/oneline-install.sh
+wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/oneline-Install.sh" && chmod +x /tmp/oneline-install.sh && sh /tmp/oneline-install.sh && rm -f /tmp/oneline-install.sh
 ```
 
 >[!CAUTION]
@@ -95,12 +95,12 @@ wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: 
 **Passwall 02-25(2025/Dec) Minimal**
 
 ```
-wget -O /tmp/install-passwall2-25.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2-25.sh" && chmod +x /tmp/install-passwall2-25.sh && sh /tmp/install-passwall2-25.sh && rm -f /tmp/install-passwall2-25.sh
+wget -O /tmp/install-passwall2-25.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/install-passwall2-25.sh" && chmod +x /tmp/install-passwall2-25.sh && sh /tmp/install-passwall2-25.sh && rm -f /tmp/install-passwall2-25.sh
 ```
 
 **Passwall 02-Minimal(Singbox-only)**
 ```
-wget -O /tmp/install-passwall2.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/install-passwall2.sh" && chmod +x /tmp/install-passwall2.sh && sh /tmp/install-passwall2.sh && rm -f /tmp/install-passwall2.sh
+wget -O /tmp/install-passwall2.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/install-passwall2.sh" && chmod +x /tmp/install-passwall2.sh && sh /tmp/install-passwall2.sh && rm -f /tmp/install-passwall2.sh
 ```
 
 ## Passwall Node/Routing Rule Mods
@@ -182,7 +182,7 @@ geosite:category-ads-all
 >Now You Can Uninstall Passwall Using Below Command To Restore Memory And Try Installing Passwall Again.But Keep In Mind That Factory Reset of router is Always Much Better Than Soft uninstall of Passwall. 
 
 ```
-wget -O /tmp/remove_passwall.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update%20Scripts/remove_passwall.sh" && chmod +x /tmp/remove_passwall.sh && sh /tmp/remove_passwall.sh && rm -f /tmp/remove_passwall.sh
+wget -O /tmp/remove_passwall.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/remove_passwall.sh" && chmod +x /tmp/remove_passwall.sh && sh /tmp/remove_passwall.sh && rm -f /tmp/remove_passwall.sh
 ```
 
 ## Auto Restart/Paswall-Switch On-Off using Crontab.
