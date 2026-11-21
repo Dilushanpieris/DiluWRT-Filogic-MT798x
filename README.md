@@ -191,6 +191,14 @@ geosite:category-ads-all
 wget -O /tmp/remove_passwall.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/remove_passwall.sh" && chmod +x /tmp/remove_passwall.sh && sh /tmp/remove_passwall.sh && rm -f /tmp/remove_passwall.sh
 ```
 
+## Make Restore Point 
+>[!IMPORTANT]
+>Experimental
+
+```
+wget -O /tmp/make_Restore.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/make_Restore.sh" && chmod +x /tmp/make_Restore.sh && sh /tmp/make_Restore.sh && rm -f /tmp/make_Restore.sh
+```
+
 ## Auto Restart/Paswall-Switch On-Off using Crontab.
 
 >[!IMPORTANT]
