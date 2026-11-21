@@ -92,6 +92,12 @@ wget -O /tmp/oneline-install.sh --no-check-certificate --header="Authorization: 
 >[!IMPORTANT]
 >This Is The Most Refined Version of Passwall02 Specifically for MI Ax3000T And ZBT Router models. From 31st of May Passwall Xray coare Has Error so Use old 25 Version if You Really Want To Stick to Xray Core otherwise You Can just use Latest one With Singbox Core.
 
+**Passwall 02-25(2025/Dec) Lean 20MB**
+
+```
+wget -O /tmp/install-passwall2-lean25tmp.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/install-passwall2-lean25tmp.sh" && chmod +x /tmp/install-passwall2-lean25tmp.sh && sh /tmp/install-passwall2-lean25tmp.sh && rm -f /tmp/install-passwall2-lean25tmp.sh
+```
+
 **Passwall 02-25(2025/Dec) Minimal**
 
 ```
