@@ -13,11 +13,27 @@ if [ -n "$root_password" ]; then
     (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
 fi
 
-# 2. Configure LAN (Strictly using official reference pattern)
+# 2. Configure LAN & Convert Single eth0 Port to WAN Uplink
 if [ -n "$lan_ip_address" ]; then
     uci set network.lan.ipaddr="$lan_ip_address"
-    uci commit network
 fi
+
+uci del_list network.@device[0].ports='eth0'
+uci set network.@device[0].bridge_empty='1'
+
+uci set network.Uplink='interface'
+uci set network.Uplink.device='eth0'
+uci set network.Uplink.proto='dhcp'
+uci commit network
+
+for i in 0 1 2 3 4; do
+    if [ "$(uci -q get firewall.@zone[$i].name)" = "wan" ]; then
+        uci del_list firewall.@zone[$i].network='Uplink' 2>/dev/null
+        uci add_list firewall.@zone[$i].network='Uplink'
+        break
+    fi
+done
+uci commit firewall
 
 # 3. Configure WLAN & Country Codes (Strictly using official reference array indices)
 if [ -n "$wlan_name" ]; then
