@@ -192,8 +192,8 @@ wget -O /tmp/remove_passwall.sh --no-check-certificate --header="Authorization: 
 ```
 
 ## Make Restore Point 
->[!IMPORTANT]
->Experimental
+>[!CAUTION]
+>Experimental Feature Make Sure To Set The Reset Point After Your Configs Are Done. And Also make Sure To keep Suitable Allowed Space For The Backup As Well Don't Create Restore points After Heavy Applications like Passwall/Torrentmanagers And SMB Servers. 
 
 ```
 wget -O /tmp/make_Restore.sh --no-check-certificate --header="Authorization: token $(cat /etc/auth/.github_token)" "https://raw.githubusercontent.com/Dilushanpieris/Project-DiluWRT/refs/heads/main/DiluWRT-Filogic-Lib/Update_Scripts/make_Restore.sh" && chmod +x /tmp/make_Restore.sh && sh /tmp/make_Restore.sh && rm -f /tmp/make_Restore.sh
